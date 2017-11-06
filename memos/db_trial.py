@@ -78,3 +78,4 @@ for record in collection.find( { "type": "dated_memo" } ):
 
 print("Records: ")
 print(records)
+collection.delete_many({})
