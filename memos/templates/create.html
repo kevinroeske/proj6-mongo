@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Create a New Memo</title>
+
+  <!-- 'viewport' is used by bootstrap to respond to device size -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Javascript:  JQuery from a content distribution network (CDN) -->
+  <script
+     src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+  </script>
+
+  <!-- Bootstrap includes javascript and css  (must follow jquery) -->
+  <link rel="stylesheet"
+   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+   <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
+</script>
+
+   <!-- Our own style sheet -->
+   <link rel="stylesheet" href="/static/css/memos.css" />
+
+
+</head>
+<body>
+<div class="container">
+
+<!-- Flashed messages before content -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<h1>Create New Memo</h1>
+
+<br />
+<div class="row">
+  <div class="col-xs-6 text-left">
+  <form id="newMemo" method="POST" action="/_insert">
+    <label for="date">Date:   (MM/DD/YY)</label>
+    <input id="date" name="date" type="text" width="15" required="required"
+      autocomplete="off"  autofocus />
+    <br /><br /><br />
+    <label for="text">Text for New Memo:</label><br />
+    <textarea id="text" name="text" rows="10" cols="36" required="required"
+      autocomplete="off"/></textarea>
+    <br /><br /><br />
+    <input id="submit" type="submit" value="Add Memo">
+   <!-- <input type="submit" name="try" />-->
+  </form>
+</div></div>
+
+ 
+
+</div> <!-- container -->
+</body>
+</html>

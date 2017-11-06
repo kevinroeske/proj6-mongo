@@ -86,10 +86,10 @@ def jstest():
     return flask.render_template('jstest.html')
 
 # We don't have an interface for creating memos yet
-# @app.route("/create")
-# def create():
-#     app.logger.debug("Create")
-#     return flask.render_template('create.html')
+@app.route("/create")
+def create():
+    app.logger.debug("Create")
+    return flask.render_template('create.html')
 
 
 @app.errorhandler(404)
@@ -105,6 +105,11 @@ def page_not_found(error):
 #
 #################
 
+@app.route("/_insert")
+def insert_new_memo()
+    """
+    This handles insert requests for new mwmos.
+    """
 
 @app.template_filter( 'humanize' )
 def humanize_arrow_date( date ):
