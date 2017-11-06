@@ -105,11 +105,18 @@ def page_not_found(error):
 #
 #################
 
-@app.route("/_insert")
-def insert_new_memo()
+@app.route("/_insert", methods=["POST"])
+def insert_new_memo():
     """
-    This handles insert requests for new mwmos.
+    This handles insert requests for new memos.
     """
+    date_text=flask.request.form["date"]
+    new_memo = {"type": "dated_memo", "date": arrow.get(date_text, 'MM/DD/YY').naive, "text": flask.request.form["text"] }
+    collection.insert(new_memo)
+    g.memos = get_memos()
+    for memo in g.memos: 
+        app.logger.debug("Memo: " + str(memo))
+    return flask.render_template('index.html')
 
 @app.template_filter( 'humanize' )
 def humanize_arrow_date( date ):
