@@ -3,8 +3,7 @@
 <title>Memos</title>
 
   <!-- 'viewport' is used by bootstrap to respond to device size -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
   <!-- Javascript:  JQuery from a content distribution network (CDN) -->
   <script
      src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
@@ -40,20 +39,21 @@
 
 {% if g.memos %}
     {% for memo in g.memos %}
+  <form action="/delete" charset="UTF-8">
   <div class="memo">
   <div class="row">
   <div class="col-md-2">
     {{ memo.date | humanize }}
   </div>
-  <div class="col-md-10">
+  <div class="col-md-10" code="utc-8">
     {{ memo.text }}
   </div>
-  <div class="col-md-15">
-  <input type="submit" value="Delete" id={{memo.text}}>
-  </div>
+  <input type="submit" id="deleted" value="Delete" name="deleted">
+  <input type="hidden" id="memo_id" name="memo_id" value={{memo.id}}>
   <br /><br />
   </div> <!-- row -->
   </div> <!-- memo -->
+  </form>
   {% endfor %}
 {% else %}
   <p>No memos for you. </p>  

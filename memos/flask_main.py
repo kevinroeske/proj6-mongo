@@ -11,13 +11,12 @@ Representation conventions for dates:
      below.) A time zone offset will 
    - User input/output is in local (to the server) time.  
 """
-
 import flask
 from flask import g
 from flask import render_template
 from flask import request
 from flask import url_for
-
+import random
 import json
 import logging
 
@@ -91,6 +90,17 @@ def create():
     app.logger.debug("Create")
     return flask.render_template('create.html')
 
+@app.route("/delete")
+def delete():
+    app.logger.debug("Delete")
+    memo_t=int(request.args.get("memo_id"))
+    app.logger.debug("Deleting " + str(memo_t))
+    collection.delete_one({"id": memo_t})
+    g.memos = get_memos()
+    for memo in g.memos:
+        app.logger.debug("Memo: " + str(memo))
+    return flask.render_template('index.html')
+
 
 @app.errorhandler(404)
 def page_not_found(error):
@@ -110,8 +120,10 @@ def insert_new_memo():
     """
     This handles insert requests for new memos.
     """
+    random.seed()
+    memo_id = random.randint(1, 35000)
     date_text=flask.request.form["date"]
-    new_memo = {"type": "dated_memo", "date": arrow.get(date_text, 'MM/DD/YY').naive, "text": flask.request.form["text"] }
+    new_memo = {"id": memo_id, "type": "dated_memo", "date": arrow.get(date_text, 'MM/DD/YY').naive, "text": flask.request.form["text"] }
     collection.insert(new_memo)
     g.memos = get_memos()
     for memo in g.memos: 
