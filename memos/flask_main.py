@@ -96,7 +96,7 @@ def delete():
     memo_t=int(request.args.get("memo_id"))
     app.logger.debug("Deleting " + str(memo_t))
     collection.delete_one({"id": memo_t})
-    g.memos = get_memos()
+    g.memos = sorted(get_memos(), key=lambda k: k['date'])
     for memo in g.memos:
         app.logger.debug("Memo: " + str(memo))
     return flask.render_template('index.html')
@@ -125,7 +125,7 @@ def insert_new_memo():
     date_text=flask.request.form["date"]
     new_memo = {"id": memo_id, "type": "dated_memo", "date": arrow.get(date_text, 'MM/DD/YY').naive, "text": flask.request.form["text"] }
     collection.insert(new_memo)
-    g.memos = get_memos()
+    g.memos = sorted(get_memos(), key=lambda k: k['date'])
     for memo in g.memos: 
         app.logger.debug("Memo: " + str(memo))
     return flask.render_template('index.html')
